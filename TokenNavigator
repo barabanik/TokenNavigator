@@ -1,0 +1,36 @@
+# main.py
+
+from scripts.token_listing import fetch_tokens
+from scripts.token_details import get_token_details
+from scripts.token_transactions import get_token_transactions
+from scripts.token_analytics import analyze_token_performance
+from scripts.alerts import trigger_alert
+from utils.data_utils import save_data, load_json
+
+def main():
+    # Example: Fetch token list
+    tokens = fetch_tokens('https://api.blockchain.example.com')
+    print(tokens)
+    
+    # Example: Get token details
+    token_details = get_token_details('https://api.blockchain.example.com', '0xTokenAddress')
+    print(token_details)
+    
+    # Example: Get token transactions
+    transactions = get_token_transactions('0xTokenAddress', 10000000, 10001000)
+    print(transactions)
+    
+    # Example: Analyze token performance
+    transaction_data = pd.DataFrame({'timestamp': pd.date_range(start='1/1/2024', periods=10, freq='D'), 'value': [100, 200, 150, 300, 250, 400, 350, 450, 500, 550]})
+    analyze_token_performance(transaction_data)
+    
+    # Example: Trigger alert
+    token_event = {'event': 'Large transaction', 'details': 'Transaction hash: 0xTransactionHash'}
+    trigger_alert(token_event)
+    
+    # Example: Save processed data
+    save_data(tokens, 'data/tokens.json')
+    save_data(transaction_data.to_dict(orient='records'), 'data/transactions.json')
+
+if __name__ == '__main__':
+    main()
